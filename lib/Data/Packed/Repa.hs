@@ -57,5 +57,5 @@ matrixToRepa m = let (r,c) = (HM.rows m,HM.cols m)
 repaToMatrix :: (Storable e, GV.Vector HV.Vector e)
              => RV.Array RV.V RA.DIM2 e
              -> HM.Matrix e
-repaToMatrix a = let (RA.Z RA.:. r RA.:. c) = RA.extent a
+repaToMatrix a = let (RA.Z RA.:. _ RA.:. c) = RA.extent a
                  in HM.reshape c $ convert $ RV.toVector a
