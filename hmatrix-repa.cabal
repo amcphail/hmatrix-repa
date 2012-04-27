@@ -1,5 +1,5 @@
-Name:               hstatistics
-Version:            0.1
+Name:               hmatrix-repa
+Version:            0.1.0.1
 License:            BSD3
 License-file:       LICENSE
 Copyright:          (c) A.V.H. McPhail 2011
@@ -23,6 +23,7 @@ extra-tmp-files:    hmatrix-repa.buildinfo
 library
 
     Build-Depends:      base >= 4 && < 5,
+                        vector >= 0.7,
                         hmatrix >= 0.10.0.4,
                         repa >= 2
 
@@ -40,6 +41,6 @@ library
                               -fno-warn-unused-binds
 
 source-repository head
-    type:     darcs
-    location: http://code.haskell.org/hmatrix-repa
+    type:     git
+    location: http://github.com/amcphail/hmatrix-repa
 
