@@ -1,5 +1,5 @@
 Name:               hmatrix-repa
-Version:            0.1.0.1
+Version:            0.1.1
 License:            BSD3
 License-file:       LICENSE
 Copyright:          (c) A.V.H. McPhail 2011
@@ -11,13 +11,13 @@ Synopsis:           Adaptors for interoperability between hmatrix and repa
 Description:        
     Adaptors for interoperability between hmatrix and repa
 Category:           Math, Data
-tested-with:        GHC ==7.0.1
+tested-with:        GHC ==7.4.1
 
 cabal-version:      >=1.8
 
 build-type:         Simple
 
-extra-source-files: README INSTALL CHANGES
+extra-source-files: README INSTALL CHANGES THANKS
 extra-tmp-files:    hmatrix-repa.buildinfo
 
 library
@@ -25,7 +25,7 @@ library
     Build-Depends:      base >= 4 && < 5,
                         vector >= 0.7,
                         hmatrix >= 0.10.0.4,
-                        repa >= 2
+                        repa >= 3 && < 4
 
     Extensions:         
 

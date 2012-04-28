@@ -1,3 +1,5 @@
+{-# LANGUAGE FlexibleContexts #-}
+
 -----------------------------------------------------------------------------
 -- |
 -- Module      :  Data.Packed.Repa
@@ -25,32 +27,35 @@ import qualified Data.Packed.Matrix as HM
 import Foreign.Storable
 
 import Data.Vector.Storable
+import qualified Data.Vector.Generic as GV
 
 import qualified Data.Array.Repa as RA
+import qualified Data.Array.Repa.Repr.Vector as RV
 
 -- | convert a Storable vector to a DIM1 repa array
-vectorToRepa :: (Storable a, RA.Elt a)
-               => HV.Vector a
-             -> RA.Array RA.DIM1 a
+vectorToRepa :: (Storable e, GV.Vector HV.Vector e)
+             => HV.Vector e
+             -> RV.Array RV.V RA.DIM1 e
 vectorToRepa v = let ln = HV.dim v
-                 in RA.fromVector (RA.Z RA.:. ln) $ convert v
+                 in RV.fromVector (RA.Z RA.:. ln) $ convert v
 
+-- XXX: note that this type could be made shape polymorhphic.
 -- | convert a 1d repa array to a Storable vector
-repaToVector :: (Storable a, RA.Elt a)
-               => RA.Array RA.DIM1 a
-                 -> HV.Vector a
-repaToVector = convert . RA.toVector
+repaToVector :: (GV.Vector HV.Vector e)
+             => RV.Array RV.V RA.DIM1 e -> HV.Vector e
+repaToVector = convert . RV.toVector
 
 -- | convert a Storable matrix to a DIM2 repa array
-matrixToRepa :: (Storable a, HM.Element a, RA.Elt a)
-               => HM.Matrix a
-             -> RA.Array RA.DIM2 a
+matrixToRepa :: (HM.Element e, GV.Vector HV.Vector e)
+             => HM.Matrix e
+             -> RV.Array RV.V RA.DIM2 e
 matrixToRepa m = let (r,c) = (HM.rows m,HM.cols m) 
-                 in RA.fromVector (RA.Z RA.:. r RA.:. c) $ convert $ HM.flatten m
+                 in RV.fromVector (RA.Z RA.:. r RA.:. c) $ convert $ HM.flatten m
 
+-- XXX: note that this could be made shape polymorphic
 -- | convert a 2d repa array to a Storable matrix
-repaToMatrix :: (Storable a, RA.Elt a)
-               => RA.Array RA.DIM2 a
-             -> HM.Matrix a
-repaToMatrix a = let (RA.Z RA.:. r RA.:. c) = RA.extent a
-                 in HM.reshape c $ convert $ RA.toVector a
+repaToMatrix :: (Storable e, GV.Vector HV.Vector e)
+             => RV.Array RV.V RA.DIM2 e
+             -> HM.Matrix e
+repaToMatrix a = let (RA.Z RA.:. _ RA.:. c) = RA.extent a
+                 in HM.reshape c $ convert $ RV.toVector a
