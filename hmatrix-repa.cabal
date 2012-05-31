@@ -1,5 +1,5 @@
 Name:               hmatrix-repa
-Version:            0.1.1
+Version:            0.1.2
 License:            BSD3
 License-file:       LICENSE
 Copyright:          (c) A.V.H. McPhail 2011
@@ -42,5 +42,5 @@ library
 
 source-repository head
     type:     git
-    location: http://github.com/amcphail/hmatrix-repa
+    location: git@github.com:amcphail/hmatrix-repa.git
 
