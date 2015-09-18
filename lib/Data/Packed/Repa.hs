@@ -3,7 +3,7 @@
 -----------------------------------------------------------------------------
 -- |
 -- Module      :  Data.Packed.Repa
--- Copyright   :  (c) Alexander Vivian Hugh McPhail 2011
+-- Copyright   :  (c) Alexander Vivian Hugh McPhail 2011, 2015
 -- License     :  BSD3
 --
 -- Maintainer  :  haskell.vivian.mcphail <at> gmail <dot> com
@@ -21,8 +21,8 @@ module Data.Packed.Repa (
                          , repaToMatrix
                          ) where
 
-import qualified Data.Packed.Vector as HV
-import qualified Data.Packed.Matrix as HM
+import qualified Numeric.LinearAlgebra.Data as HV
+import qualified Numeric.LinearAlgebra.Data as HM
 
 import Foreign.Storable
 
