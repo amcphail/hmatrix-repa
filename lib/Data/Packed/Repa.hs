@@ -21,6 +21,7 @@ module Data.Packed.Repa (
                          , repaToMatrix
                          ) where
 
+import qualified Numeric.LinearAlgebra      as H
 import qualified Numeric.LinearAlgebra.Data as HV
 import qualified Numeric.LinearAlgebra.Data as HM
 
@@ -33,10 +34,10 @@ import qualified Data.Array.Repa as RA
 import qualified Data.Array.Repa.Repr.Vector as RV
 
 -- | convert a Storable vector to a DIM1 repa array
-vectorToRepa :: (Storable e, GV.Vector HV.Vector e)
+vectorToRepa :: (Storable e, GV.Vector HV.Vector e, H.Container Vector e)
              => HV.Vector e
              -> RV.Array RV.V RA.DIM1 e
-vectorToRepa v = let ln = HV.dim v
+vectorToRepa v = let ln = HV.size v
                  in RV.fromVector (RA.Z RA.:. ln) $ convert v
 
 -- XXX: note that this type could be made shape polymorhphic.
@@ -46,7 +47,7 @@ repaToVector :: (GV.Vector HV.Vector e)
 repaToVector = convert . RV.toVector
 
 -- | convert a Storable matrix to a DIM2 repa array
-matrixToRepa :: (HM.Element e, GV.Vector HV.Vector e)
+matrixToRepa :: (H.Element e, GV.Vector HV.Vector e)
              => HM.Matrix e
              -> RV.Array RV.V RA.DIM2 e
 matrixToRepa m = let (r,c) = (HM.rows m,HM.cols m) 
